@@ -2,6 +2,7 @@ name: Packer Builds for thredds-test-action
 
 on:
   workflow_dispatch:
+  pull_request:
 
 jobs:
   packer-build:
@@ -10,14 +11,10 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      - uses: hashicorp/packer-github-actions@master
-        with:
-          command: init
-          working_directory: .github/packer_files
-          target: plugins.pkr.json
-      - uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          arguments: "--only=docker-github-action"
-          working_directory: packer
-          target: thredds-test-env.json
+      - name: Execute Packer
+        run: |
+          cd packer
+          packer build --only=docker-github-action \
+            -var 'github.actor=${{ github.actor }}' \
+            -var 'gha_token=${{ secrets.GITHUB_TOKEN }}' \
+            thredds-test-env.json
