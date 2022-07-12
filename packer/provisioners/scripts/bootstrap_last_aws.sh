@@ -7,6 +7,6 @@ if [ "$EUID" -ne 0 ]; then
     SUDO_CMD="sudo"
 fi
 
-# Need openjdk-8-jre-headless so that jenkins can connect to worker nodes
+# Need openjdk-11-jre-headless so that jenkins can connect to worker nodes
 # using this ami.
-${SUDO_CMD} apt install --yes openjdk-8-jre-headless
+${SUDO_CMD} apt install --yes openjdk-11-jre-headless
