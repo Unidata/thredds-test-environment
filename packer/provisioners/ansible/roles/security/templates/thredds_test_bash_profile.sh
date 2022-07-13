@@ -29,7 +29,7 @@ function update-path() {
 
 # select-java vendor version
 # example:
-#    select-java 11 zulu
+#    select-java zulu 11
 #
 # vendor: [ temurin || zulu ] (no default)
 # version: [ 8 || 11 || 14 ] (no default)

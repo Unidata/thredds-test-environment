@@ -133,7 +133,7 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
   * ruby (via [geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby) from [Ansible Galaxy](https://galaxy.ansible.com/))
 
 ### Bash functions:
- * `select-java <version> <vendor>` (where version is 8, 11, 14, or 16, and vendor is `temurin` or `zulu`)
+ * `select-java <vendor> <version>` (where version is 8, 11, 14, or 16, and vendor is `temurin` or `zulu`)
    * note that Temurin does not have a version 14 binary at this time.
  * `activate-conda`
  * `get_pw <key>`
