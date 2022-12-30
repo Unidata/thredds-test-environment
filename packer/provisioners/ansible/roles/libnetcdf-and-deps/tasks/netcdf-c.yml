@@ -1,7 +1,7 @@
 ---
 - name: Download and unpack netcdf-c.
   unarchive:
-    src: "https://downloads.unidata.ucar.edu/netcdf-c/{{ netcdf_version }}/src/netcdf-c-{{ netcdf_version }}.tar.gz"
+    src: "https://downloads.unidata.ucar.edu/netcdf-c/{{ netcdf_version }}/netcdf-c-{{ netcdf_version }}.tar.gz"
     dest: "{{ tmp_dir }}"
     creates: "{{ netcdf_src_dir }}"
     remote_src: yes
