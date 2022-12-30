@@ -8,7 +8,7 @@
 
 - name: Install miniconda.
   # The -b flag is for batch mode (i.e. non-interactive).
-  shell: "{{ tmp_dir }}/miniconda-installer.sh -b -u -p {{ install_dir }}/miniconda3"
+  shell: "bash {{ tmp_dir }}/miniconda-installer.sh -b -u -p {{ install_dir }}/miniconda3"
   async: "{{ miniconda_async_timeout }}"
   poll: "{{ async_poll_value_move_on }}"
   register: async_miniconda
