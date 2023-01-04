@@ -113,8 +113,8 @@
         jid: "{{ async_hdf5.ansible_job_id }}"
       register: job_result
       until: job_result.finished
-      retries: "{{ hdf5_async_check_interval }}"
-      delay: "{{ hdf5_async_check_retries }}"
+      retries: "{{ hdf5_async_check_retries }}"
+      delay: "{{ hdf5_async_check_interval }}"
 
     # Now that asynchronous tasks are complete, it should be safe to cleanup
     # the build environment.
