@@ -16,7 +16,7 @@ BUILD_TOOL=${3}
 TEST_COMMAND=${4}
 
 VALID_JAVA_VENDORS=("temurin" "zulu")
-VALID_JAVA_VERSIONS=("8" "11" "14" "16")
+VALID_JAVA_VERSIONS=("8" "11" "16" "17")
 VALID_BUILD_TOOLS=("gradlew" "mvn")
 
 #
