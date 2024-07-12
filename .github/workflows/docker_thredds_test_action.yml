@@ -14,6 +14,7 @@ jobs:
         run: |
           cd packer
           packer plugins install github.com/hashicorp/docker
+          packer plugins install github.com/hashicorp/ansible
           packer build --only=docker-github-action thredds-test-env.json
           docker login --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
           docker push ghcr.io/unidata/thredds-test-action:v2
