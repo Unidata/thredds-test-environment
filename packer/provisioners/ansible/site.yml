@@ -11,7 +11,7 @@
         name: init
       tags: [ init ]
 
-    # The next two tasks take a good amount of time to run, and as a result 
+    # The next two tasks take a good amount of time to run, and as a result
     # utilize asynchronous task execution. We run these early on in the
     # playbook to keep things moving.
     - name: Include 'libnetcdf-and-deps' role.
@@ -62,11 +62,6 @@
         name: thredds-test-data-mount-prep
       tags: [ thredds-test-data-mount-prep ]
 
-    - name: Include 'gradle cache bootstrap' role.
-      include_role:
-        name: gradle-builds-cache-bootstrap
-      tags: [ gradle-builds-cache-bootstrap ]
-
     # Wait for the asynchronous tasks to complete.
     - name: Wait for zlib async test task to complete.
       when: (async_zlib is defined) and (async_zlib|length > 0)
@@ -94,18 +89,6 @@
       until: job_result.finished
       retries: "{{ netcdf_c_async_check_interval }}"
       delay: "{{ netcdf_c_async_check_retries }}"
-
-    - name: "Wait for the gradle builds to complete."
-      when: (async_bootstrap_gradle_cache is defined) and (async_bootstrap_gradle_cache|length > 0)
-      async_status:
-        jid: "{{ async_bootstrap_gradle_cache_item.ansible_job_id }}"
-      loop: "{{ async_bootstrap_gradle_cache.results }}"
-      loop_control:
-        loop_var: "async_bootstrap_gradle_cache_item"
-      register: async_poll_results
-      until: async_poll_results.finished
-      retries: "{{ bootstrap_gradle_cache_async_check_retries }}"
-      delay: "{{ bootstrap_gradle_cache_async_check_interval }}"
 
     - name: Wait for the HDF5 async test task to complete.
       when: (async_hdf5 is defined) and (async_hdf5|length > 0)

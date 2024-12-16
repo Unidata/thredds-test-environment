@@ -1,7 +1,7 @@
 ---
 - name: Fetch latest Temurin Java builds.
   uri:
-    url: "https://api.adoptium.net/v3/binary/latest/{{ item }}/ga/linux/x64/jdk/hotspot/normal/adoptium?project=jdk"
+    url: "https://api.adoptium.net/v3/binary/latest/{{ item }}/ga/linux/x64/jdk/hotspot/normal/eclipse?project=jdk"
     method: GET
     follow_redirects: safe
     dest: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"

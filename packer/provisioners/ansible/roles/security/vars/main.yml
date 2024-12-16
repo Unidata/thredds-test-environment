@@ -7,6 +7,9 @@ custom_bash_profile_dest: "/etc/profile.d/{{ custom_bash_profile_src }}"
 users:
   - name: "{{ thredds_test_user }}"
     shell: /bin/bash
+    uid: 395
+    gid: 395
+    group: "{{ thredds_test_user }}"
 
 files2copy:
   - label: "maven settings"

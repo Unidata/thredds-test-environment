@@ -4,5 +4,5 @@ base_install_name: temurin
 java_versions:
   - 8
   - 11
-  - 16
   - 17
+  - 21

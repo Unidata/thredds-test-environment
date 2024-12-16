@@ -7,20 +7,8 @@
   loop_control:
     label: "Create Directory for Temurin {{ item }} Installation"
 
-# Not sure why, but sometimes we cannot fetch Temurin 11 from aws (8 works
-# just fine). When that happens, we can use a local copy of the tar.gz files
-# rather than using the web API to fetch them. Uncomment the following task,
-# as well as the "when" statement under the fetch_remote task below to use
-# the local workflow. You will need to run one of the scripts in ../files
-# prior to running packer to make sure the tar.gz files exists and are
-# up-to-date.
-#- import_tasks: fetch_local.yml
-#  tags: [ fetch-local ]
-#  when: packer_builder_type == "amazon-ebs"
-
 - import_tasks: fetch_remote.yml
   tags: [ fetch-remote ]
-  #when: packer_builder_type != "amazon-ebs"
 
 - name: Unpack Temurin Java Installations.
   unarchive:

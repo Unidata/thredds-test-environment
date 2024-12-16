@@ -1,11 +1,3 @@
 ---
-# The name of the device to which AWS will mount the cdmUnitTest snapshot. We set this in Jenkins under:
-# "Manage Jenkins"->"Configure System"->"Cloud"->"Amazon EC2"->"AMIs"->"Advanced..."->"Block device mapping".
-# For example, we have something like: "/dev/xvdf=<snap-id>::true"
-volume_device_name: /dev/xvdf
-
-# The directory at which the cdmUnitTest EBS snapshot should be mounted.
+# The directory at which the THREDDS test data should be mounted.
 cdmUnitTest_mount_dir: /share/testdata/cdmUnitTest
-
-# The filesystem of the snapshot.
-filesystem_type: ext4
