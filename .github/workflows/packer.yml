@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
-      # validate templates
-      - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
+        uses: actions/checkout@v4
+      - name: Setup packer
+        uses: hashicorp/setup-packer@main
+        id: setup
         with:
-          command: validate
-          working_directory: packer
-          target: thredds-test-env.pkr.hcl
+          version: latest
+      - name: Run packer initi
+        id: init
+        run: "cd packer && packer init thredds-test-env.pkr.hcl"
+      - name: Validate Template
+        id: validate
+        run: "cd packer && packer validate thredds-test-env.pkr.hcl"
