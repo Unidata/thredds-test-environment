@@ -17,4 +17,4 @@ jobs:
         with:
           command: validate
           working_directory: packer
-          target: thredds-test-env.json
+          target: thredds-test-env.pkr.hcl
