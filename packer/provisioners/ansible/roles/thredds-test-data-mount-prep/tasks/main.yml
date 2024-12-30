@@ -1,25 +1,8 @@
 ---
-- name: List information about '{{ volume_device_name }}' block device.
-  command: lsblk {{ volume_device_name }}
-  register: lsblk_output
-  changed_when: false  # Task is purely informational; it doesn't change anything.
-  ignore_errors: true  # Task is expected to fail when device doesn't exist. We handle that case below.
-
-- name: Determine if '{{ volume_device_name }}' block device exists.
-  set_fact:
-    volume_device_exists: "{{ lsblk_output.rc == 0 }}"
-
 - name: Ensure the '{{ cdmUnitTest_mount_dir }}' exists.
   file:
     path: "{{ cdmUnitTest_mount_dir }}"
     state: directory
-
-- name: Add entry for '{{ volume_device_name }}' to /etc/fstab, and mount it if it's available.
-  mount:
-    src: "{{ volume_device_name }}"
-    path: "{{ cdmUnitTest_mount_dir }}"
-    fstype: "{{ filesystem_type }}"
-    opts: defaults,nofail  # Don't fail when the device isn't available, which will happen in dev and test environments.
-    dump: "0"
-    passno: "2"
-    state: "{{ volume_device_exists | ternary('mounted', 'present') }}"
+    owner: "{{ thredds_test_user }}"
+    group: "{{ thredds_test_user }}"
+    mode: "0755"

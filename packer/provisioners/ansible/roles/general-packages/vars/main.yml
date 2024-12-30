@@ -5,3 +5,4 @@ needed_packages:
  - git
  - fonts-dejavu # Needed by UI tests because OpenJDK does not ship with fonts
  - fontconfig # Needed by UI tests because OpenJDK does not ship with fonts
+ - curl # Needed by static analysis pipelines
