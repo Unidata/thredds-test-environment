@@ -2,7 +2,7 @@
 
 A packer + ansible project to build Docker images for use by the various THREDDS projects at Unidata for running automated tests.
 The Docker images are used as the basis for Jenkins build nodes as well as a custom GitHub action for testing the various THREDDS projects.
-The image is based off the latest available image for `ubuntu 20.04`.
+The image is based off the latest available image for `ubuntu 24.04`.
 The docker images produced by packer are called "thredds-test-environment" (for use by Jenkins) of `thredds-test-action` (for use by the GitHub action).
 
 ## Requirements

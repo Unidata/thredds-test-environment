@@ -12,7 +12,7 @@ packer {
 }
 
 locals {
-  base_docker_image = "ubuntu:20.04"
+  base_docker_image = "ubuntu:24.04"
   thredds_test_user = "jenkins"
 }
 
