@@ -12,7 +12,7 @@ packer {
 }
 
 locals {
-  base_docker_image = "ubuntu:20.04"
+  base_docker_image = "ubuntu:24.04"
   thredds_test_user = "jenkins"
 }
 
@@ -43,20 +43,10 @@ source "docker" "docker-github-action" {
   platform = "linux/amd64"
 }
 
-source "docker" "docker-github-action-nexus" {
-  changes  = ["USER root", "ENV GITHUB_ACTIONS=\"YEP\"",
-              "ENTRYPOINT [\"/entrypoint.sh\"]"
-              ]
-  commit   = true
-  image    = "${local.base_docker_image}"
-  platform = "linux/amd64"
-}
-
 build {
   sources = ["source.docker.docker-jenkins",
              "source.docker.docker-export",
              "source.docker.docker-github-action",
-             "source.docker.docker-github-action-nexus",
              ]
 
   provisioner "shell" {
@@ -66,7 +56,7 @@ build {
   provisioner "file" {
     destination = "/entrypoint.sh"
     source      = "provisioners/file/entrypoint.sh"
-    only        = ["docker.docker-github-action", "docker.docker-github-action-nexus"]
+    only        = ["docker.docker-github-action",]
   }
 
   provisioner "ansible-local" {
@@ -113,7 +103,6 @@ build {
   provisioner "shell" {
     inline = ["dos2unix /entrypoint.sh"]
     only   = ["docker.docker-github-action",
-              "docker.docker-github-action-nexus",
               ]
   }
 
@@ -129,11 +118,6 @@ build {
   post-processor "docker-tag" {
     only       = ["docker.docker-github-action"]
     repository = "ghcr.io/unidata/thredds-test-action"
-    tags       = ["v2",]
-  }
-  post-processor "docker-tag" {
-    only       = ["docker.docker-github-action-nexus"]
-    repository = "docker.unidata.ucar.edu/thredds-test-action"
-    tags       = ["v2",]
+    tags       = ["v3",]
   }
 }
