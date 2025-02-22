@@ -37,14 +37,13 @@ packer build --only=<type> thredds-test-env.pkr.hcl
 
 `<type>` will one or more (separated by commas) of the following:
 * `docker.docker-jenkins`: Provision a Docker container and generate and tag a local Docker image (`docker.unidata.ucar.edu/thredds-test-environment:latest`).
+* `docker.docker-github-action`: Provision a Docker container for use with GitHub Actions and tag a local docker image (`ghcr.io/unidata/thredds-test-action:v3`).
 * `docker.docker-export`: Provision a Docker container and generate a local Docker image as a file (`image.tar`).
-* `docker.docker-github-action`: Provision a Docker container for use with GitHub Actions and publish to the GitHub Package Repository (runs using manual `workflow_dispatch` trigger on github actions).
-* `docker.docker-github-action-nexus`: Same as `docker-github-action`, but tags for publishing to the Unidata Nexus Repository.
 
-Typically, we would run the following to update the Jenkins and Github Action Docker images (hosted on Nexus) at the same time:
+Typically, we would run the following to update the Jenkins and Github Action Docker images at the same time:
 
 ~~~bash
-packer build --only=docker.docker-jenkins,docker.docker-github-action-nexus thredds-test-env.pkr.hcl
+packer build --only=docker.docker-jenkins,docker.docker-github-action thredds-test-env.pkr.hcl
 ~~~
 
 The Docker image builds takes about 1 hour to create.
@@ -56,8 +55,15 @@ If using `docker-jenkins`, then once the image is built you can test out the env
 docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:latest
 ~~~
 
+These images are not produced using the multiplatform feature of Docker.
+If you are on a arm64 based mac, you will need to run:
+
+~~~bash
+DOCKER_DEFAULT_PLATFORM=linux/amd64 docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:latest
+~~~
+
 Note that images are not pushed as part of this build process.
-Pushes can be done via the normal docker mechanisms, e.g. `docker image push docker.unidata.ucar.edu/thredds-test-environment:latest`.
+Pushes can be done via the normal docker mechanisms, e.g. `docker image push docker.unidata.ucar.edu/thredds-test-environment:latest` and `docker image push ghcr.io/unidata/thredds-test-action:v3`.
 
 ## Project layout
 
