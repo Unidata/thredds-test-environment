@@ -58,10 +58,6 @@
         name: maven
       tags: [ maven ]
 
-    - name: Include ruby role from ansible-galaxy.
-      include_role:
-        name: geerlingguy.ruby
-
     - name: Include 'thredds-test-data-mount-prep' role.
       include_role:
         name: thredds-test-data-mount-prep

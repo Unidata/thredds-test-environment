@@ -41,6 +41,3 @@ git_clone_async_check_retries: 30
 bootstrap_gradle_cache_async_timeout: 1800 # seconds (30 minutes)
 bootstrap_gradle_cache_async_check_interval: 60 # seconds
 bootstrap_gradle_cache_async_check_retries: 30
-
-# geerlingguy.ruby role variables
-ruby_install_bundler: false

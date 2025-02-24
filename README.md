@@ -108,8 +108,6 @@ We use the following roles when provisioning our images:
 * `test-data-mount-prep`: Prepare the environment to mount the `thredds-test-data` datasets when available (currently used on Jenkins worker nodes).
 * `zulu`: Obtain and install LTS versions of Zulu.
 
-We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a Ruby environment ([geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby)).
-
 ## THREDDS Test Environment Highlights
 
 ### netCDF-C
@@ -146,9 +144,6 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
    * 17 (`/usr/thredds-test-environment/corretto17`)
    * 21 (`/usr/thredds-test-environment/corretto21`)
 
-### Ruby
-  * ruby (via [geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby) from [Ansible Galaxy](https://galaxy.ansible.com/))
-
 ### Bash functions:
  * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin`, `zulu`, or `corretto`)
  * `activate-conda`
@@ -180,7 +175,6 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
     docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 28.32s
     docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 26.71s
     docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 24.31s
-    docker.docker-jenkins: geerlingguy.ruby : Install ruby and other required dependencies. ------- 12.96s
     docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 12.77s
     docker.docker-jenkins: miniconda : Download and unpack miniconda. ------------------------------ 9.31s
     docker.docker-jenkins: libnetcdf-and-deps : Install zlib. -------------------------------------- 5.46s

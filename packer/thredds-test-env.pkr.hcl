@@ -63,7 +63,6 @@ build {
     clean_staging_directory = true
     command                 = "ANSIBLE_CONFIG=/ansible_config/ansible.cfg ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ansible-playbook"
     extra_arguments         = ["--extra-vars", "\"thredds_test_user=${local.thredds_test_user}\""]
-    galaxy_file             = "provisioners/ansible/requirements.yml"
     group_vars              = "provisioners/ansible/group_vars"
     playbook_file           = "provisioners/ansible/site.yml"
     role_paths              = ["provisioners/ansible/roles/cleanup",
