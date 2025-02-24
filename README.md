@@ -92,6 +92,7 @@ The `ansible/` directory is laid out as follows:
 We use the following roles when provisioning our images:
 
 * `cleanup`: General cleanup related tasks, such as remove the temporary build directory and running `ldconfig`
+* `corretto`: Obtain and install LTS versions of Corretto.
 * `general-packages`: Install general packages needed for the build environment using the OS package manager.
 * `gradle-builds-cache-bootstrap`: Pull in and build netCDF-Java to populate the gradle cache for user ubuntu.
 * `init`: Initialize the build environment by ensuring the temporary ansible build directory exists.
@@ -139,11 +140,17 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
    * 17 (`/usr/thredds-test-environment/zulu17`)
    * 21 (`/usr/thredds-test-environment/zulu21`)
 
+ * Corretto (latest version available from docs.aws.amazon.com/corretto/)
+   * 8 (`/usr/thredds-test-environment/corretto8`)
+   * 11 (`/usr/thredds-test-environment/corretto11`)
+   * 17 (`/usr/thredds-test-environment/corretto17`)
+   * 21 (`/usr/thredds-test-environment/corretto21`)
+
 ### Ruby
   * ruby (via [geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby) from [Ansible Galaxy](https://galaxy.ansible.com/))
 
 ### Bash functions:
- * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin` or `zulu`)
+ * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin`, `zulu`, or `corretto`)
  * `activate-conda`
  * `get_pw <key>`
 

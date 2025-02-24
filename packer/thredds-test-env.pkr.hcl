@@ -67,6 +67,7 @@ build {
     group_vars              = "provisioners/ansible/group_vars"
     playbook_file           = "provisioners/ansible/site.yml"
     role_paths              = ["provisioners/ansible/roles/cleanup",
+                               "provisioners/ansible/roles/corretto",
                                "provisioners/ansible/roles/general-packages",
                                "provisioners/ansible/roles/init",
                                "provisioners/ansible/roles/libnetcdf-and-deps",

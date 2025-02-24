@@ -31,11 +31,11 @@ function update-path() {
 # example:
 #    select-java zulu 11
 #
-# vendor: [ temurin || zulu ] (no default)
-# version: [ 8 || 11 || 14 ] (no default)
+# vendor: [ temurin || zulu || corretto ] (no default)
+# version: [ 8 || 11 || 17 || 21 ] (no default)
 #
 function select-java() {
-    VALID_VENDORS=("temurin" "zulu")
+    VALID_VENDORS=("temurin" "zulu" "corretto")
     # Caller must supply exactly two arguments.
     if [ ! $# -eq 2 ]
     then

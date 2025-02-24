@@ -48,6 +48,11 @@
         name: zulu
       tags: [ zulu ]
 
+    - name: Include 'corretto' role.
+      include_role:
+        name: corretto
+      tags: [ corretto ]
+
     - name: Include 'maven' role.
       include_role:
         name: maven
