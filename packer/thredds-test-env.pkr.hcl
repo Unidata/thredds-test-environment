@@ -112,7 +112,7 @@ build {
   post-processor "docker-tag" {
     only       = ["docker.docker-jenkins"]
     repository = "docker.unidata.ucar.edu/thredds-test-environment"
-    tags       = ["latest",]
+    tags       = ["24.04",]
   }
   post-processor "docker-tag" {
     only       = ["docker.docker-github-action"]
