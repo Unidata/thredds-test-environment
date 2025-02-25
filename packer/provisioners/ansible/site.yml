@@ -19,11 +19,6 @@
         name: libnetcdf-and-deps
       tags: [ libnetcdf ]
 
-    - name: Include 'Miniconda 3' role.
-      include_role:
-        name: miniconda
-      tags: [ miniconda ]
-
     # The next few are either relatively fast, or run apt (which blocks other
     # calls to apt), so we run them synchronously.
     - name: Install OS managed tools by needed to provision the environment or are used by downstream test builds.
@@ -48,14 +43,15 @@
         name: zulu
       tags: [ zulu ]
 
+    - name: Include 'corretto' role.
+      include_role:
+        name: corretto
+      tags: [ corretto ]
+
     - name: Include 'maven' role.
       include_role:
         name: maven
       tags: [ maven ]
-
-    - name: Include ruby role from ansible-galaxy.
-      include_role:
-        name: geerlingguy.ruby
 
     - name: Include 'thredds-test-data-mount-prep' role.
       include_role:
@@ -71,15 +67,6 @@
       until: job_result.finished
       retries: "{{ zlib_async_check_interval }}"
       delay: "{{ zlib_async_check_retries }}"
-
-    - name: Wait for miniconda install async task to complete.
-      when: (async_miniconda is defined) and (async_miniconda|length > 0)
-      async_status:
-        jid: "{{ async_miniconda.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: "{{ miniconda_async_check_interval }}"
-      delay: "{{ miniconda_async_check_retries }}"
 
     - name: Wait for netcdf-c async test task to complete.
       when: (async_netcdf_c is defined) and (async_netcdf_c|length > 0)

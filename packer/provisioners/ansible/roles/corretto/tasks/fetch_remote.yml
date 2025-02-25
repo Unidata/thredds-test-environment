@@ -1,0 +1,18 @@
+---
+- name: Fetch latest Corretto Java builds.
+  uri:
+    url: "https://corretto.aws/downloads/latest/amazon-corretto-{{ item }}-x64-linux-jdk.tar.gz"
+    method: GET
+    follow_redirects: safe
+    dest: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"
+    # Expect 200 locally (i.e. Docker builder), 304 (for some versions) on AWS EC2.
+    status_code: [200, 304]
+  register: uri_result
+  retries: "{{ network_call_retries }}"
+  delay: "{{ network_call_time_between_retries }}"
+  until: ("status" in uri_result) and (uri_result.status == 200 or uri_result.status == 304)
+  loop: "{{ java_versions }}"
+
+- debug:
+    var: uri_result
+    verbosity: 2

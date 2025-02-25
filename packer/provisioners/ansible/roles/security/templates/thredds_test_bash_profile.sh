@@ -8,14 +8,6 @@ DEFAULT_PATH=${M2}:${PATH}
 ANSIBLE_BUILT_BIN="{{ install_dir }}/bin"
 export DEFAULT_PATH=${DEFAULT_PATH}:${ANSIBLE_BUILT_BIN}
 
-function activate-conda() {
-    CONDA_PROFILE="{{ install_dir }}/miniconda3/etc/profile.d/conda.sh"
-    if [[ $(which conda | wc -c) -eq 0 ]]
-    then
-        source ${CONDA_PROFILE}
-    fi
-}
-
 function update-path() {
     if ! [ -z "${JAVA_HOME}" ]
     then
@@ -31,11 +23,11 @@ function update-path() {
 # example:
 #    select-java zulu 11
 #
-# vendor: [ temurin || zulu ] (no default)
-# version: [ 8 || 11 || 14 ] (no default)
+# vendor: [ temurin || zulu || corretto ] (no default)
+# version: [ 8 || 11 || 17 || 21 ] (no default)
 #
 function select-java() {
-    VALID_VENDORS=("temurin" "zulu")
+    VALID_VENDORS=("temurin" "zulu" "corretto")
     # Caller must supply exactly two arguments.
     if [ ! $# -eq 2 ]
     then

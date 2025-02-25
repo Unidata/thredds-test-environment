@@ -3,10 +3,6 @@
 install_dir: /usr/thredds-test-environment
 tmp_dir: /tmp/thredds-ansible-tmp
 
-# Shared between gradle-builds-cache-bootstrap and cleanup roles.
-tmp_repo_dir: "{{ tmp_dir }}/git_repositories"
-gradle_user_home: "/home/{{ thredds_test_user }}/.gradle"
-
 # The variable thredds_test_user is defined in the packer configuration
 # located at packer/thredds-test-env.json.
 
@@ -29,18 +25,3 @@ hdf5_async_check_retries: 80
 netcdf_c_async_timeout: 1800 # seconds (30 minutes)
 netcdf_c_async_check_interval: 120 # seconds
 netcdf_c_async_check_retries: 30
-
-miniconda_async_timeout: 1800 # seconds (30 minutes)
-miniconda_async_check_interval: 60 # seconds
-miniconda_async_check_retries: 30
-
-git_clone_async_timeout: 600 # seconds (10 minutes)
-git_clone_async_check_interval: 20 # seconds
-git_clone_async_check_retries: 30
-
-bootstrap_gradle_cache_async_timeout: 1800 # seconds (30 minutes)
-bootstrap_gradle_cache_async_check_interval: 60 # seconds
-bootstrap_gradle_cache_async_check_retries: 30
-
-# geerlingguy.ruby role variables
-ruby_install_bundler: false

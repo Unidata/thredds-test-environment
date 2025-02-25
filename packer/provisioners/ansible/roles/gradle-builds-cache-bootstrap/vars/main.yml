@@ -1,6 +1,0 @@
----
-top_level_repo: "https://github.com/Unidata"
-
-repo_info:
-  - { name: "netcdf-java", branch: "maint-5.x", tasks: "classes testClasses assemble javadoc", jdk: "temurin8" }
-  

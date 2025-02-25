@@ -63,15 +63,14 @@ build {
     clean_staging_directory = true
     command                 = "ANSIBLE_CONFIG=/ansible_config/ansible.cfg ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ansible-playbook"
     extra_arguments         = ["--extra-vars", "\"thredds_test_user=${local.thredds_test_user}\""]
-    galaxy_file             = "provisioners/ansible/requirements.yml"
     group_vars              = "provisioners/ansible/group_vars"
     playbook_file           = "provisioners/ansible/site.yml"
     role_paths              = ["provisioners/ansible/roles/cleanup",
+                               "provisioners/ansible/roles/corretto",
                                "provisioners/ansible/roles/general-packages",
                                "provisioners/ansible/roles/init",
                                "provisioners/ansible/roles/libnetcdf-and-deps",
                                "provisioners/ansible/roles/maven",
-                               "provisioners/ansible/roles/miniconda",
                                "provisioners/ansible/roles/security",
                                "provisioners/ansible/roles/temurin",
                                "provisioners/ansible/roles/thredds-test-data-mount-prep",
@@ -113,7 +112,7 @@ build {
   post-processor "docker-tag" {
     only       = ["docker.docker-jenkins"]
     repository = "docker.unidata.ucar.edu/thredds-test-environment"
-    tags       = ["latest",]
+    tags       = ["24.04",]
   }
   post-processor "docker-tag" {
     only       = ["docker.docker-github-action"]

@@ -1,0 +1,36 @@
+---
+- name: Create installation directories, if they do not exist.
+  file:
+    path: "{{ install_dir }}/{{ base_install_name }}{{ item }}"
+    state: directory
+  loop: "{{ java_versions }}"
+  loop_control:
+    label: "Create Directory for Corretto {{ item }} Installation"
+
+- import_tasks: fetch_remote.yml
+  tags: [ fetch-remote ]
+
+- name: Unpack Corretto Java Installations.
+  unarchive:
+    src: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"
+    dest: "{{ install_dir }}/{{ base_install_name }}{{ item }}"
+    extra_opts: [--strip-components=1]
+    creates: "{{ install_dir }}/{{ base_install_name }}{{ item }}/bin"
+    remote_src: yes
+  loop: "{{ java_versions }}"
+  loop_control:
+    label: "Unpack Corretto {{ item }}"
+
+- name: Read versions of installed Corretto.
+  shell: "{{ install_dir }}/{{ base_install_name }}{{ item }}/bin/java -version"
+  register: shell_output
+  loop: "{{ java_versions }}"
+  loop_control:
+    label: "Read Corretto {{ item }} Version Information"
+
+- name: Print versions of installed Corretto Java instances.
+  debug:
+    msg="{{ item.stderr_lines[1] }}"
+  loop: "{{ shell_output.results }}"
+  loop_control:
+    label: "Corretto {{ item.item }} Version:"

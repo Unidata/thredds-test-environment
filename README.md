@@ -36,7 +36,7 @@ packer build --only=<type> thredds-test-env.pkr.hcl
 ~~~
 
 `<type>` will one or more (separated by commas) of the following:
-* `docker.docker-jenkins`: Provision a Docker container and generate and tag a local Docker image (`docker.unidata.ucar.edu/thredds-test-environment:latest`).
+* `docker.docker-jenkins`: Provision a Docker container and generate and tag a local Docker image (`docker.unidata.ucar.edu/thredds-test-environment:20.04`).
 * `docker.docker-github-action`: Provision a Docker container for use with GitHub Actions and tag a local docker image (`ghcr.io/unidata/thredds-test-action:v3`).
 * `docker.docker-export`: Provision a Docker container and generate a local Docker image as a file (`image.tar`).
 
@@ -46,24 +46,24 @@ Typically, we would run the following to update the Jenkins and Github Action Do
 packer build --only=docker.docker-jenkins,docker.docker-github-action thredds-test-env.pkr.hcl
 ~~~
 
-The Docker image builds takes about 1 hour to create.
+The Docker image builds takes about 30 minutes to create on MacOS.
 Packer will run the builders in parallel, so the total time to create the `thredds-test-environment` images is around an hour.
 
 If using `docker-jenkins`, then once the image is built you can test out the environment by using:
 
 ~~~bash
-docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:latest
+docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:24.04
 ~~~
 
-These images are not produced using the multiplatform feature of Docker.
-If you are on a arm64 based mac, you will need to run:
+These images are built using the multiplatform feature of Docker, and only `linux/amd64` images are produced.
+If you are on a `arm64` based mac, you will need to run:
 
 ~~~bash
-DOCKER_DEFAULT_PLATFORM=linux/amd64 docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:latest
+DOCKER_DEFAULT_PLATFORM=linux/amd64 docker run -i -t --rm docker.unidata.ucar.edu/thredds-test-environment:24.04
 ~~~
 
 Note that images are not pushed as part of this build process.
-Pushes can be done via the normal docker mechanisms, e.g. `docker image push docker.unidata.ucar.edu/thredds-test-environment:latest` and `docker image push ghcr.io/unidata/thredds-test-action:v3`.
+Pushes can be done via the normal docker mechanisms, e.g. `docker image push docker.unidata.ucar.edu/thredds-test-environment:24.04` and `docker image push ghcr.io/unidata/thredds-test-action:v3`.
 
 ## Project layout
 
@@ -92,12 +92,11 @@ The `ansible/` directory is laid out as follows:
 We use the following roles when provisioning our images:
 
 * `cleanup`: General cleanup related tasks, such as remove the temporary build directory and running `ldconfig`
+* `corretto`: Obtain and install LTS versions of Corretto.
 * `general-packages`: Install general packages needed for the build environment using the OS package manager.
-* `gradle-builds-cache-bootstrap`: Pull in and build netCDF-Java to populate the gradle cache for user ubuntu.
 * `init`: Initialize the build environment by ensuring the temporary ansible build directory exists.
 * `libnetcdf-and-deps`: Configure, build, and install `zlib`, `HDF5`, and `netCDF-C`.
 * `maven`: Obtain and install the Apache Maven software project management and comprehension tool. 
-* `miniconda`: Obtain and install the Anaconda miniconda python distribution.
 * `security`:
   * Add the `ubuntu` user.
   * Add a default `maven-settings.xml` file configured to publish to the Unidata artifacts server.
@@ -107,8 +106,6 @@ We use the following roles when provisioning our images:
 * `test-data-mount-prep`: Prepare the environment to mount the `thredds-test-data` datasets when available (currently used on Jenkins worker nodes).
 * `zulu`: Obtain and install LTS versions of Zulu.
 
-We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a Ruby environment ([geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby)).
-
 ## THREDDS Test Environment Highlights
 
 ### netCDF-C
@@ -117,10 +114,6 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
  * dependencies (same location):
    * zlib version: `1.2.11`
    * hdf5 version: `1.12.1`
-
-### miniconda
- * location: `/usr/thredds-test-environment/miniconda3`
- * version: `Miniconda3-latest-Linux-x86_64`
 
 ### maven:
  * location: `/usr/thredds-test-environment/mvn`
@@ -139,12 +132,14 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
    * 17 (`/usr/thredds-test-environment/zulu17`)
    * 21 (`/usr/thredds-test-environment/zulu21`)
 
-### Ruby
-  * ruby (via [geerlingguy.ruby](https://galaxy.ansible.com/geerlingguy/ruby) from [Ansible Galaxy](https://galaxy.ansible.com/))
+ * Corretto (latest version available from docs.aws.amazon.com/corretto/)
+   * 8 (`/usr/thredds-test-environment/corretto8`)
+   * 11 (`/usr/thredds-test-environment/corretto11`)
+   * 17 (`/usr/thredds-test-environment/corretto17`)
+   * 21 (`/usr/thredds-test-environment/corretto21`)
 
 ### Bash functions:
- * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin` or `zulu`)
- * `activate-conda`
+ * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin`, `zulu`, or `corretto`)
  * `get_pw <key>`
 
 ### Latest version available via the OS Package Manager
@@ -160,26 +155,26 @@ We also use a role from [Ansible Galaxy](https://galaxy.ansible.com/) to setup a
 ### Docker Image
 
 ~~~
-    docker.docker-jenkins: Friday 22 November 2024  21:12:32 +0000 (0:00:02.871)       0:20:20.107 *******
+    docker.docker-jenkins: Tuesday 25 February 2025  15:28:53 +0000 (0:00:02.993)       0:25:00.302 ******
     docker.docker-jenkins: ===============================================================================
-    docker.docker-jenkins: Wait for the HDF5 async test task to complete. ------------------------ 362.21s
-    docker.docker-jenkins: libnetcdf-and-deps : Install hdf5. ------------------------------------ 272.84s
-    docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 128.28s
-    docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ---------------------------------- 114.44s
-    docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. ---------------------------------- 54.52s
-    docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. ---------------------------- 46.20s
-    docker.docker-jenkins: zulu : Unpack Zulu Java Installations. --------------------------------- 35.03s
-    docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. --------------------------------- 28.84s
-    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 28.32s
-    docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 26.71s
-    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 24.31s
-    docker.docker-jenkins: geerlingguy.ruby : Install ruby and other required dependencies. ------- 12.96s
-    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 12.77s
-    docker.docker-jenkins: miniconda : Download and unpack miniconda. ------------------------------ 9.31s
-    docker.docker-jenkins: libnetcdf-and-deps : Install zlib. -------------------------------------- 5.46s
-    docker.docker-jenkins: libnetcdf-and-deps : Configure zlib. ------------------------------------ 4.13s
-    docker.docker-jenkins: security : Update SSH configuration to be more secure. ------------------ 3.78s
-    docker.docker-jenkins: libnetcdf-and-deps : Download and unpack hdf5. -------------------------- 3.59s
-    docker.docker-jenkins: zulu : Read versions of installed Zulu. --------------------------------- 3.34s
-    docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ----- 3.07s
+    docker.docker-jenkins: Wait for the HDF5 async test task to complete. ------------------------ 362.87s
+    docker.docker-jenkins: libnetcdf-and-deps : Install hdf5. ------------------------------------ 328.13s
+    docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 180.21s
+    docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ---------------------------------- 135.15s
+    docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. ---------------------------- 83.71s
+    docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. ---------------------------------- 77.12s
+    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 41.00s
+    docker.docker-jenkins: corretto : Fetch latest Corretto Java builds. -------------------------- 40.41s
+    docker.docker-jenkins: zulu : Unpack Zulu Java Installations. --------------------------------- 37.98s
+    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 36.87s
+    docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. --------------------------------- 34.90s
+    docker.docker-jenkins: corretto : Unpack Corretto Java Installations. ------------------------- 28.92s
+    docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 28.57s
+    docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 15.22s
+    docker.docker-jenkins: libnetcdf-and-deps : Install zlib. -------------------------------------- 6.27s
+    docker.docker-jenkins: security : Update SSH configuration to be more secure. ------------------ 5.02s
+    docker.docker-jenkins: libnetcdf-and-deps : Configure zlib. ------------------------------------ 4.52s
+    docker.docker-jenkins: zulu : Read versions of installed Zulu. --------------------------------- 3.74s
+    docker.docker-jenkins: libnetcdf-and-deps : Download and unpack hdf5. -------------------------- 3.65s
+    docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ----- 3.54s
 ~~~
