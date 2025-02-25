@@ -25,7 +25,3 @@ hdf5_async_check_retries: 80
 netcdf_c_async_timeout: 1800 # seconds (30 minutes)
 netcdf_c_async_check_interval: 120 # seconds
 netcdf_c_async_check_retries: 30
-
-miniconda_async_timeout: 1800 # seconds (30 minutes)
-miniconda_async_check_interval: 60 # seconds
-miniconda_async_check_retries: 30

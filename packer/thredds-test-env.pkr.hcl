@@ -71,7 +71,6 @@ build {
                                "provisioners/ansible/roles/init",
                                "provisioners/ansible/roles/libnetcdf-and-deps",
                                "provisioners/ansible/roles/maven",
-                               "provisioners/ansible/roles/miniconda",
                                "provisioners/ansible/roles/security",
                                "provisioners/ansible/roles/temurin",
                                "provisioners/ansible/roles/thredds-test-data-mount-prep",

@@ -8,14 +8,6 @@ DEFAULT_PATH=${M2}:${PATH}
 ANSIBLE_BUILT_BIN="{{ install_dir }}/bin"
 export DEFAULT_PATH=${DEFAULT_PATH}:${ANSIBLE_BUILT_BIN}
 
-function activate-conda() {
-    CONDA_PROFILE="{{ install_dir }}/miniconda3/etc/profile.d/conda.sh"
-    if [[ $(which conda | wc -c) -eq 0 ]]
-    then
-        source ${CONDA_PROFILE}
-    fi
-}
-
 function update-path() {
     if ! [ -z "${JAVA_HOME}" ]
     then
