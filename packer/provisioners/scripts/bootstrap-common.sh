@@ -37,6 +37,6 @@ ansible --version
 # a custom ansible config file).
 ${SUDO_CMD} mkdir ${ANSIBLE_CONFIG_DIR}
 echo "[defaults]" | ${SUDO_CMD} tee ${ANSIBLE_CONFIG} 
-echo "callback_whitelist = profile_tasks" | ${SUDO_CMD} tee -a ${ANSIBLE_CONFIG} 
+echo "callbacks_enabled = ansible.posix.profile_tasks" | ${SUDO_CMD} tee -a ${ANSIBLE_CONFIG}
 ${SUDO_CMD} chmod 444 ${ANSIBLE_CONFIG}
 ${SUDO_CMD} cat ${ANSIBLE_CONFIG}
