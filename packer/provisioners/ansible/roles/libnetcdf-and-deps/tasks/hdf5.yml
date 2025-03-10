@@ -1,7 +1,7 @@
 ---
 - name: Download and unpack hdf5.
   unarchive:
-    src: "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-{{ hdf5_version_major }}.{{ hdf5_version_minor }}/hdf5-{{ hdf5_version_full }}/src/hdf5-{{ hdf5_version_full }}.tar.gz"
+    src: "https://github.com/HDFGroup/hdf5/releases/download/hdf5_{{ hdf5_version_full }}/hdf5-{{ hdf5_version_full }}.tar.gz"
     dest: "{{ tmp_dir }}"
     creates: "{{ hdf5_src_dir }}"
     remote_src: yes
@@ -16,8 +16,13 @@
     chdir: "{{ hdf5_src_dir }}"
     creates: "{{ hdf5_src_dir }}/config.log"
 
-- name: Install hdf5.
+- name: Make hdf5.
   command: "make -j{{ make_jobs}} install"
+  args:
+    chdir: "{{ hdf5_src_dir }}"
+
+- name: Install hdf5.
+  command: "make install"
   args:
     chdir: "{{ hdf5_src_dir }}"
     creates: "{{ install_dir }}/lib/libhdf5.so"

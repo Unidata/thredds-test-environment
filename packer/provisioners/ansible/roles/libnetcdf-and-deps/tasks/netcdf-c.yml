@@ -11,7 +11,7 @@
   until: unarchive_result.failed == false
 
 - name: Configure netCDF-c.
-  command: ./configure --prefix={{ install_dir }} --disable-dap --disable-utilities --disable-static
+  command: ./configure --prefix={{ install_dir }} --disable-dap --disable-utilities --disable-static --disable-nczarr --disable-libxml2 --disable-byterange
   args:
     chdir: "{{ netcdf_src_dir }}"
     creates: "{{ netcdf_src_dir }}/config.log"
