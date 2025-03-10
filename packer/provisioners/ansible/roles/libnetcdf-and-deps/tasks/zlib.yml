@@ -1,7 +1,7 @@
 ---
 - name: Download and unpack zlib.
   unarchive:
-    src: https://downloads.sourceforge.net/project/libpng/zlib/{{ zlib_version }}/zlib-{{ zlib_version }}.tar.gz
+    src: https://www.zlib.net/zlib-{{ zlib_version }}.tar.gz
     dest: "{{ tmp_dir }}"
     creates: "{{ zlib_src_dir }}"
     remote_src: yes

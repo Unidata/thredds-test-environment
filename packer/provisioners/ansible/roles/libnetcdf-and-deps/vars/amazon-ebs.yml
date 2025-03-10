@@ -1,3 +1,0 @@
----
-# Use make with j2 option when using packer's amazon-ebs builder.
-make_jobs: 2
