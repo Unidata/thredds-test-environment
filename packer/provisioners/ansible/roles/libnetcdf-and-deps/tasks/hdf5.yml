@@ -1,6 +1,6 @@
 ---
 - name: Download and unpack hdf5.
-  unarchive:
+  ansible.builtin.unarchive:
     src: "https://github.com/HDFGroup/hdf5/releases/download/hdf5_{{ hdf5_version_full }}/hdf5-{{ hdf5_version_full }}.tar.gz"
     dest: "{{ tmp_dir }}"
     creates: "{{ hdf5_src_dir }}"
@@ -11,29 +11,68 @@
   until: unarchive_result.failed == false
 
 - name: Configure hdf5.
-  command: ./configure --prefix={{ install_dir }} --with-zlib={{ install_dir }}
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - -S
+      - "{{ hdf5_src_dir }}"
+      - -B
+      - "{{ hdf5_build_dir }}"
+      - -G
+      - Unix Makefiles
+      - "-DCMAKE_BUILD_TYPE={{ hdf5_build_type }}"
+      - "-DCMAKE_INSTALL_PREFIX={{ install_dir }}"
+      - "-DCMAKE_PREFIX_PATH={{ install_dir }}/lib"
+      - -DHDF5_BUILD_TOOLS=OFF
+      - -DBUILD_STATIC_LIBS=OFF
+      - -DBUILD_SHARED_LIBS=TRUE
+      - "-DDEFAULT_API_VERSION={{ hdf5_default_api_version }}"
+      - -DHDF5_BUILD_EXAMPLES=OFF
+      - -DHDF5_ENABLE_SZIP_SUPPORT=OFF
   args:
-    chdir: "{{ hdf5_src_dir }}"
-    creates: "{{ hdf5_src_dir }}/config.log"
+    chdir: "{{ tmp_dir }}"
+    creates: "{{ hdf5_build_dir }}/CMakeCache.txt"
 
-- name: Make hdf5.
-  command: "make -j{{ make_jobs}} install"
+- name: Build hdf5.
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --build
+      - "{{ hdf5_build_dir }}"
+      - --config
+      - "{{ hdf5_build_type }}"
+      - -j
+      - "{{ make_jobs}}"
   args:
-    chdir: "{{ hdf5_src_dir }}"
+    chdir: "{{ tmp_dir }}"
+    creates: "{{ hdf5_build_dir }}/bin/libhdf5.so"
 
 - name: Install hdf5.
-  command: "make install"
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --install
+      - "{{ hdf5_build_dir }}"
+      - --config
+      - "{{ hdf5_build_type }}"
   args:
-    chdir: "{{ hdf5_src_dir }}"
+    chdir: "{{ tmp_dir }}"
     creates: "{{ install_dir }}/lib/libhdf5.so"
+
+- name: Update the run-time linker cache to include HDF5.
+  ansible.builtin.command: ldconfig
 
 # Run after install for performance reasons, as check can take quite some time
 # to run. Will check status and wait (if not finished) near the end of the
 # ansible provision process.
 - name: Test HDF5.
-  command: "make -j{{ make_jobs}} check"
+  ansible.builtin.command:
+    argv:
+      - ctest
+      - -j
+      - "{{ make_jobs }}"
   args:
-    chdir: "{{ hdf5_src_dir }}"
+    chdir: "{{ hdf5_build_dir }}"
   async: "{{ hdf5_async_timeout }}"
   poll: "{{ async_poll_value_move_on }}"
   register: async_hdf5

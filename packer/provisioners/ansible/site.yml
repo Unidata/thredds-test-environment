@@ -58,16 +58,6 @@
         name: thredds-test-data-mount-prep
       tags: [ thredds-test-data-mount-prep ]
 
-    # Wait for the asynchronous tasks to complete.
-    - name: Wait for zlib async test task to complete.
-      when: (async_zlib is defined) and (async_zlib|length > 0)
-      async_status:
-        jid: "{{ async_zlib.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
-      retries: "{{ zlib_async_check_interval }}"
-      delay: "{{ zlib_async_check_retries }}"
-
     - name: Wait for netcdf-c async test task to complete.
       when: (async_netcdf_c is defined) and (async_netcdf_c|length > 0)
       async_status:

@@ -14,10 +14,6 @@ async_poll_value_move_on: 0 # seconds
 
 default_async_timeout: 300 # seconds
 
-zlib_async_timeout: 300 # seconds (5 minutes)
-zlib_async_check_interval: 15 # seconds
-zlib_async_check_retries: 20
-
 hdf5_async_timeout: 7200 # seconds (60 minutes)
 hdf5_async_check_interval: 120 # seconds
 hdf5_async_check_retries: 80

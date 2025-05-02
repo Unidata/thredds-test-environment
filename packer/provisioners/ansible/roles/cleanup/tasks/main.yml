@@ -1,18 +1,19 @@
 ---
-- name: Prepare to add thredds-test-environment native libraries to run-time linker
-  copy:
-    dest: "/etc/ld.so.conf.d/tte.conf"
-    content: "{{ install_dir }}/lib"
-
 - name: Update the run-time linker cache to include any newly built libraries.
-  command: ldconfig
+  ansible.builtin.command: ldconfig
 
 - name: "Cleanup the temporary build directory."
-  file:
+  ansible.builtin.file:
     path: "{{ tmp_dir }}"
     state: absent
 
 - name: Remove packages that are not needed in final environment.
-  package:
+  ansible.builtin.apt:
     name: "{{ purgeable_packages }}"
     state: absent
+    autoremove: true
+    purge: true
+
+- name: Run the equivalent of "apt-get clean" as a separate step
+  ansible.builtin.apt:
+    clean: yes

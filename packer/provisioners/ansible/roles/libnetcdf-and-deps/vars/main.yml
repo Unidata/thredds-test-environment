@@ -1,12 +1,17 @@
 ---
 zlib_version: 1.3.1
+zlib_build_type: Release
 zlib_src_dir: "{{ tmp_dir }}/zlib-{{ zlib_version }}"
+zlib_build_dir: "{{ tmp_dir }}/zlib-build"
 
 hdf5_version_major: 1
 hdf5_version_minor: 14
 hdf5_version_point: 6
+hdf5_default_api_version: v110
+hdf5_build_type: Release
 hdf5_version_full: "{{  hdf5_version_major }}.{{ hdf5_version_minor }}.{{ hdf5_version_point }}"
 hdf5_src_dir: "{{ tmp_dir }}/hdf5-{{ hdf5_version_full }}"
+hdf5_build_dir: "{{ tmp_dir }}/hdf5-build"
 
 netcdf_version: 4.9.2
 netcdf_src_dir: "{{ tmp_dir }}/netcdf-c-{{ netcdf_version }}"
