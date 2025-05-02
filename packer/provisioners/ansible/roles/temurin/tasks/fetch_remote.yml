@@ -4,7 +4,7 @@
     url: "https://api.adoptium.net/v3/binary/latest/{{ item }}/ga/linux/x64/jdk/hotspot/normal/eclipse?project=jdk"
     method: GET
     follow_redirects: safe
-    dest: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"
+    dest: "{{ tmp_dir }}/{{ base_install_name }}{{ item }}.tar.gz"
     # Expect 200 locally (i.e. Docker builder), 304 (for some versions) on AWS EC2.
     status_code: [200, 304]
   register: uri_result

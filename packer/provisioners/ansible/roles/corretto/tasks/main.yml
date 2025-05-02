@@ -12,7 +12,7 @@
 
 - name: Unpack Corretto Java Installations.
   unarchive:
-    src: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"
+    src: "{{ tmp_dir }}/{{ base_install_name }}{{ item }}.tar.gz"
     dest: "{{ install_dir }}/{{ base_install_name }}{{ item }}"
     extra_opts: [--strip-components=1]
     creates: "{{ install_dir }}/{{ base_install_name }}{{ item }}/bin"
