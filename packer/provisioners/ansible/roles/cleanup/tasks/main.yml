@@ -14,6 +14,6 @@
     autoremove: true
     purge: true
 
-- name: Run the equivalent of "apt-get clean" as a separate step
+- name: Run apt-get clean
   ansible.builtin.apt:
     clean: yes

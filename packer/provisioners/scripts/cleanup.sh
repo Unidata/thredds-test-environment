@@ -7,8 +7,14 @@ if [ "$EUID" -ne 0 ]; then
     SUDO_CMD="sudo"
 fi
 
+# Remove ansible
+${SUDO_CMD} apt remove ansible -y
+
 # Remove dangling dependencies.
 ${SUDO_CMD} apt autoremove --purge --yes
 
 # Clear out the apt cache.
 ${SUDO_CMD} apt-get clean --yes
+
+# Remove package lists
+${SUDO_CMD} rm -rf /var/lib/apt/lists/*
