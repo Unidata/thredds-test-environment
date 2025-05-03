@@ -1,6 +1,6 @@
 ---
 - name: Download and unpack zlib.
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://www.zlib.net/zlib-{{ zlib_version }}.tar.gz
     dest: "{{ tmp_dir }}"
     creates: "{{ zlib_src_dir }}"
@@ -11,23 +11,53 @@
   until: unarchive_result.failed == false
 
 - name: Configure zlib.
-  command: ./configure --prefix={{ install_dir }}
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - -S
+      - "{{ zlib_src_dir }}"
+      - -B
+      - "{{ zlib_build_dir }}"
+      - "-DCMAKE_BUILD_TYPE={{ zlib_build_type }}"
+      - "-DCMAKE_INSTALL_PREFIX={{ install_dir }}"
   args:
-    chdir: "{{ zlib_src_dir }}"
-    creates: "{{ zlib_src_dir }}/configure.log"
+    chdir: "{{ tmp_dir }}"
+    creates: "{{ zlib_build_dir }}/CMakeCache.txt"
+
+- name: Build zlib.
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --build
+      - "{{ zlib_build_dir }}"
+      - --config
+      - "{{ zlib_build_type }}"
+      - -j
+      - "{{ make_jobs}}"
+  args:
+    chdir: "{{ tmp_dir }}"
+    creates: "{{ zlib_build_dir }}/bin/libz.so"
+
+- name: Test zlib.
+  ansible.builtin.command:
+    argv:
+      - ctest
+      - -j
+      - "{{ make_jobs }}"
+  args:
+    chdir: "{{ zlib_build_dir }}"
 
 - name: Install zlib.
-  command: "make -j{{ make_jobs }} install"
+  ansible.builtin.command:
+    argv:
+      - cmake
+      - --install
+      - "{{ zlib_build_dir }}"
+      - --config
+      - "{{ zlib_build_type }}"
   args:
-    chdir: "{{ zlib_src_dir }}"
+    chdir: "{{ tmp_dir }}"
     creates: "{{ install_dir }}/lib/libz.so"
 
-# This does not take long to run, but will run asynchronously like the other
-# make check tasks.
-- name: Test zlib.
-  command: "make -j{{ make_jobs }} check"
-  args:
-    chdir: "{{ zlib_src_dir }}"
-  async: "{{ zlib_async_timeout }}"
-  poll: "{{ async_poll_value_move_on }}"
-  register: async_zlib
+- name: Update the run-time linker cache to include zlib.
+  ansible.builtin.command: ldconfig

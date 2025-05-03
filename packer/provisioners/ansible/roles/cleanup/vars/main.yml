@@ -4,3 +4,4 @@
 purgeable_packages:
   - build-essential
   - m4
+  - cmake

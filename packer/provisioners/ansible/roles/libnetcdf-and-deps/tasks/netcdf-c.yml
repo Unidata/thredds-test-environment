@@ -1,6 +1,6 @@
 ---
 - name: Download and unpack netcdf-c.
-  unarchive:
+  ansible.builtin.unarchive:
     src: "https://downloads.unidata.ucar.edu/netcdf-c/{{ netcdf_version }}/netcdf-c-{{ netcdf_version }}.tar.gz"
     dest: "{{ tmp_dir }}"
     creates: "{{ netcdf_src_dir }}"
@@ -11,7 +11,7 @@
   until: unarchive_result.failed == false
 
 - name: Configure netCDF-c.
-  command: ./configure --prefix={{ install_dir }} --disable-dap --disable-utilities --disable-static --disable-nczarr --disable-libxml2 --disable-byterange
+  ansible.builtin.command: ./configure --prefix={{ install_dir }} --disable-dap --disable-utilities --disable-static --disable-nczarr --disable-libxml2 --disable-byterange
   args:
     chdir: "{{ netcdf_src_dir }}"
     creates: "{{ netcdf_src_dir }}/config.log"
@@ -25,11 +25,14 @@
     chdir: "{{ netcdf_src_dir }}"
     creates: "{{ install_dir }}/lib/libnetcdf.so"
 
+- name: Update the run-time linker cache to include netCDF-C.
+  ansible.builtin.command: ldconfig
+
 # Run after install for performance reasons, as check can take quite some time
 # to run. Will check status and wait (if not finished) near the end of the
 # ansible provision process.
 - name: Test netCDF-c.
-  command: "make -j{{ make_jobs }} check "
+  ansible.builtin.command: "make -j{{ make_jobs }} check"
   args:
     chdir: "{{ netcdf_src_dir }}"
   async: "{{ netcdf_c_async_timeout }}"

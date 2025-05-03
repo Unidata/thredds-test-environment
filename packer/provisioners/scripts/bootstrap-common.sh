@@ -20,13 +20,6 @@ ${SUDO_CMD} apt upgrade --yes
 # risk getting stuck at a prompt asking us to set the timezone interactivly
 DEBIAN_FRONTEND="noninteractive" TZ="Etc/UTC" ${SUDO_CMD} apt install --yes tzdata
 
-# Once the ansiuble PPA has builds for 20.04, uncomment the next sections
-# to install ansible using it.
-# Add ansible ppa.
-# https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-ubuntu
-#${SUDO_CMD} apt install --yes software-properties-common
-#${SUDO_CMD} apt-add-repository --yes --update ppa:ansible/ansible
-
 # Install ansible.
 ${SUDO_CMD} apt install --yes ansible
 

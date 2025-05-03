@@ -1,3 +1,3 @@
 ---
-# Use make with j4 option when using packer's docker builder.
-make_jobs: 4
+# Use make/cmake with j option when using packer's docker builder.
+make_jobs: 8

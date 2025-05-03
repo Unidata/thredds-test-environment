@@ -12,3 +12,6 @@ ${SUDO_CMD} apt autoremove --purge --yes
 
 # Clear out the apt cache.
 ${SUDO_CMD} apt-get clean --yes
+
+# Remove package lists
+${SUDO_CMD} rm -rf /var/lib/apt/lists/*

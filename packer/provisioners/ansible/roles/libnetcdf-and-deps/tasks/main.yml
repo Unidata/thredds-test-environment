@@ -15,6 +15,12 @@
     needed_packages:
       - build-essential
       - m4
+      - cmake
+
+- name: Prepare to add thredds-test-environment native libraries to run-time linker
+  copy:
+    dest: "/etc/ld.so.conf.d/tte.conf"
+    content: "{{ install_dir }}/lib"
 
 - include_tasks: zlib.yml
   tags: [ zlib ]

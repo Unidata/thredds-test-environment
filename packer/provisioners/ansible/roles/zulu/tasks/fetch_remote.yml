@@ -4,7 +4,7 @@
     url: "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/binary/?jdk_version={{ item }}&ext=tar.gz&os=linux&arch=x86&hw_bitness=64"
     method: GET
     follow_redirects: safe
-    dest: "/tmp/{{ base_install_name }}{{ item }}.tar.gz"
+    dest: "{{ tmp_dir }}/{{ base_install_name }}{{ item }}.tar.gz"
     # Expect 200 locally (i.e. Docker builder), 304 (for some versions) on AWS EC2.
     status_code: [200, 304]
   register: uri_result
