@@ -13,5 +13,5 @@ hdf5_version_full: "{{  hdf5_version_major }}.{{ hdf5_version_minor }}.{{ hdf5_v
 hdf5_src_dir: "{{ tmp_dir }}/hdf5-{{ hdf5_version_full }}"
 hdf5_build_dir: "{{ tmp_dir }}/hdf5-build"
 
-netcdf_version: 4.9.2
+netcdf_version: 4.9.3
 netcdf_src_dir: "{{ tmp_dir }}/netcdf-c-{{ netcdf_version }}"

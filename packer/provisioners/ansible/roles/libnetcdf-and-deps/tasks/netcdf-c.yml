@@ -11,7 +11,15 @@
   until: unarchive_result.failed == false
 
 - name: Configure netCDF-c.
-  ansible.builtin.command: ./configure --prefix={{ install_dir }} --disable-dap --disable-utilities --disable-static --disable-nczarr --disable-libxml2 --disable-byterange
+  ansible.builtin.command:
+    argv:
+      - ./configure
+      - --prefix={{ install_dir }}
+      - --disable-dap
+      - --disable-static
+      - --disable-nczarr
+      - --disable-libxml2
+      - --disable-byterange
   args:
     chdir: "{{ netcdf_src_dir }}"
     creates: "{{ netcdf_src_dir }}/config.log"
@@ -20,7 +28,12 @@
     LDFLAGS: -L{{ install_dir }}/lib
 
 - name: Install netCDF-c.
-  command: "make -j{{ make_jobs }} install"
+  ansible.builtin.command:
+    argv:
+      - make
+      - -j
+      - "{{ make_jobs}}"
+      - install
   args:
     chdir: "{{ netcdf_src_dir }}"
     creates: "{{ install_dir }}/lib/libnetcdf.so"
@@ -32,7 +45,12 @@
 # to run. Will check status and wait (if not finished) near the end of the
 # ansible provision process.
 - name: Test netCDF-c.
-  ansible.builtin.command: "make -j{{ make_jobs }} check"
+  ansible.builtin.command:
+    argv:
+      - make
+      - -j
+      - "{{ make_jobs}}"
+      - check
   args:
     chdir: "{{ netcdf_src_dir }}"
   async: "{{ netcdf_c_async_timeout }}"
