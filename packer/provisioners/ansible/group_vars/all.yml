@@ -3,9 +3,6 @@
 install_dir: /usr/thredds-test-environment
 tmp_dir: /tmp/thredds-ansible-tmp
 
-# The variable thredds_test_user is defined in the packer configuration
-# located at packer/thredds-test-env.json.
-
 network_call_time_between_retries: 30 # seconds
 network_call_retries: 3
 

@@ -1,4 +1,7 @@
 ---
+
+# The variable thredds_test_user is defined in the packer configuration
+# located at packer/thredds-test-env.pkr.hcl.
 - name: Ensure the '{{ cdmUnitTest_mount_dir }}' exists.
   file:
     path: "{{ cdmUnitTest_mount_dir }}"

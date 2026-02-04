@@ -4,11 +4,13 @@
 custom_bash_profile_src: thredds_test_bash_profile.sh
 custom_bash_profile_dest: "/etc/profile.d/{{ custom_bash_profile_src }}"
 
+# The variables thredds_test_user, thredds_test_user_uid, and thredds_test_user_gid are
+# defined in the packer configuration located at packer/thredds-test-env.pkr.hcl.
 users:
   - name: "{{ thredds_test_user }}"
     shell: /bin/bash
-    uid: 395
-    gid: 395
+    uid: "{{ thredds_test_user_uid }}"
+    gid: "{{ thredds_test_user_gid }}"
     group: "{{ thredds_test_user }}"
 
 files2copy:
