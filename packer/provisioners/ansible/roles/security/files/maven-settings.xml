@@ -7,18 +7,18 @@
     <!-- maven repository authentication for deployment or artifacts -->
     <server>
       <id>unidata-snapshots</id>
-      <username>${nexus.username}</username>
-      <password>${nexus.password}</password>
+      <username>${artifacts.username}</username>
+      <password>${artifacts.password}</password>
     </server>
     <server>
       <id>unidata-releases</id>
-      <username>${nexus.username}</username>
-      <password>${nexus.password}</password>
+      <username>${artifacts.username}</username>
+      <password>${artifacts.password}</password>
     </server>
     <server>
       <id>unidata-3rdparty</id>
-      <username>${nexus.username}</username>
-      <password>${nexus.password}</password>
+      <username>${artifacts.username}</username>
+      <password>${artifacts.password}</password>
     </server>
   </servers>
 </settings>
