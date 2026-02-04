@@ -1,7 +1,7 @@
 ---
 - name: THREDDS Test Environment playbook.
   hosts: all
-  remote_user: "{{ thredds_test_user }}" # Defined in packer config
+  remote_user: "{{ thredds_test_user }}" # Defined in packer config located at packer/thredds-test-env.pkr.hcl
   become: yes
   become_method: sudo
   tasks:

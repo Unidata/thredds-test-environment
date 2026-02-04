@@ -5,6 +5,8 @@
 - include_tasks: ssh.yml
   tags: [ ssh ]
 
+# The variable thredds_test_user is defined in the packer configuration
+# located at packer/thredds-test-env.pkr.hcl.
 - name: Create .m2 directory for user
   file:
     path: "/home/{{ thredds_test_user }}/.m2"
