@@ -119,7 +119,7 @@ We use the following roles when provisioning our images:
 
 ### maven:
  * location: `/usr/thredds-test-environment/mvn`
- * version: `3.9.12`
+ * version: `3.9.15`
 
 ### Java:
  * Temurin (latest version available from adoptium.net)

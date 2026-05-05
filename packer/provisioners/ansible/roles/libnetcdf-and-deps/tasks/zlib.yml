@@ -43,7 +43,7 @@
     argv:
       - ctest
       - -j
-      - "{{ make_jobs }}"
+      - "1"
   args:
     chdir: "{{ zlib_build_dir }}"
 
