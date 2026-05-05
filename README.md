@@ -114,7 +114,7 @@ We use the following roles when provisioning our images:
  * location: `/usr/thredds-test-environment`
  * version: `4.9.2`
  * dependencies (same location):
-   * zlib version: `1.3.1`
+   * zlib version: `1.3.2`
    * hdf5 version: `1.14.6`
 
 ### maven:
