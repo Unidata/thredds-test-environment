@@ -39,6 +39,7 @@ packer build --only=<type> thredds-test-env.pkr.hcl
 
 `<type>` will one or more (separated by commas) of the following:
 * `docker.docker-jenkins`: Provision a Docker container and generate and tag a local Docker image (`docker.io/unidata/thredds-test-environment:20.04`).
+  * Note: you need to be connected to the UCAR VPN to build this image, as it requires access to the Unidata Jenkins server to fetch the latest `agent.jar`. 
 * `docker.docker-github-action`: Provision a Docker container for use with GitHub Actions and tag a local docker image (`ghcr.io/unidata/thredds-test-action:v3`).
 * `docker.docker-export`: Provision a Docker container and generate a local Docker image as a file (`image.tar`).
 
