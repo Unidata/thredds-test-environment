@@ -112,10 +112,10 @@ We use the following roles when provisioning our images:
 
 ### netCDF-C
  * location: `/usr/thredds-test-environment`
- * version: `4.9.2`
+c * version: `4.10.0`
  * dependencies (same location):
    * zlib version: `1.3.2`
-   * hdf5 version: `1.14.6`
+   * hdf5 version: `2.1.1`
 
 ### maven:
  * location: `/usr/thredds-test-environment/mvn`

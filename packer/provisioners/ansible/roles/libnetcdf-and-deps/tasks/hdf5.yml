@@ -1,7 +1,7 @@
 ---
 - name: Download and unpack hdf5.
   ansible.builtin.unarchive:
-    src: "https://github.com/HDFGroup/hdf5/releases/download/hdf5_{{ hdf5_version_full }}/hdf5-{{ hdf5_version_full }}.tar.gz"
+    src: "https://github.com/HDFGroup/hdf5/releases/download/{{ hdf5_version_full }}/hdf5-{{ hdf5_version_full }}.tar.gz"
     dest: "{{ tmp_dir }}"
     creates: "{{ hdf5_src_dir }}"
     remote_src: yes
@@ -29,6 +29,8 @@
       - "-DDEFAULT_API_VERSION={{ hdf5_default_api_version }}"
       - -DHDF5_BUILD_EXAMPLES=OFF
       - -DHDF5_ENABLE_SZIP_SUPPORT=OFF
+      - -DHDF5_ENABLE_ZLIB_SUPPORT=ON
+      - "-DZLIB_ROOT={{ install_dir }}"
   args:
     chdir: "{{ tmp_dir }}"
     creates: "{{ hdf5_build_dir }}/CMakeCache.txt"
