@@ -6,7 +6,7 @@ The image is based off the latest available image for `ubuntu 24.04`.
 The docker images produced by packer are called "thredds-test-environment" (for use by Jenkins) of `thredds-test-action` (for use by the GitHub action).
 The image used by Jenkins is hosted on the Docker Hub Container Registry, while the image used by the GitHub action is hosted on the GitHub Container Registry.
 
-## Requirementsco
+## Requirements
 
 * Packer ([download](https://www.packer.io/downloads))
 * Docker, for building the Docker images ([download](https://www.docker.com/products/docker-desktop))
@@ -113,14 +113,14 @@ We use the following roles when provisioning our images:
 
 ### netCDF-C
  * location: `/usr/thredds-test-environment`
-c * version: `4.10.0`
+ * version: `4.10.1`
  * dependencies (same location):
    * zlib version: `1.3.2`
-   * hdf5 version: `2.1.1`
+   * hdf5 version: `2.2.0`
 
 ### maven:
  * location: `/usr/thredds-test-environment/mvn`
- * version: `3.9.15`
+ * version: `3.10.0`
 
 ### Java:
  * Temurin (latest version available from adoptium.net)
@@ -145,7 +145,7 @@ c * version: `4.10.0`
    * 25 (`/usr/thredds-test-environment/corretto25`)
 
 ### Bash functions:
- * `select-java <vendor> <version>` (where version is 8, 11, 17, or 21, and vendor is `temurin`, `zulu`, or `corretto`)
+ * `select-java <vendor> <version>` (where version is 8, 11, 17, 21, or 25, and vendor is `temurin`, `zulu`, or `corretto`)
  * `get_pw <key>`
 
 ### Latest version available via the OS Package Manager
@@ -161,26 +161,26 @@ c * version: `4.10.0`
 ### Docker Image
 
 ~~~
-==> docker.docker-jenkins: Wednesday 06 May 2026  17:38:51 +0000 (0:00:04.617)       0:39:15.818 *********
+==> docker.docker-jenkins: Tuesday 13 October 2026  18:32:11 +0000 (0:00:04.732)       0:42:50.681 *******
 ==> docker.docker-jenkins: ===============================================================================
-==> docker.docker-jenkins: libnetcdf-and-deps : Build hdf5. -------------------------------------- 635.60s
-==> docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 317.66s
-==> docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. --------------------------------- 178.71s
-==> docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ---------------------------------- 140.01s
-==> docker.docker-jenkins: zulu : Unpack Zulu Java Installations. -------------------------------- 124.72s
-==> docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. --------------------------- 118.00s
-==> docker.docker-jenkins: temurin : Unpack Temurin Java Installations. -------------------------- 100.38s
-==> docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. --------------------------------- 98.84s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 85.94s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 84.00s
-==> docker.docker-jenkins: corretto : Unpack Corretto Java Installations. ------------------------- 81.84s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 63.96s
-==> docker.docker-jenkins: corretto : Fetch latest Corretto Java builds. -------------------------- 44.91s
-==> docker.docker-jenkins: libnetcdf-and-deps : Test zlib. ---------------------------------------- 28.21s
-==> docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ---- 22.82s
-==> docker.docker-jenkins: libnetcdf-and-deps : Build zlib. --------------------------------------- 19.99s
-==> docker.docker-jenkins: security : Update SSH configuration to be more secure. ----------------- 17.80s
-==> docker.docker-jenkins: temurin : Read versions of installed Temurin. -------------------------- 16.20s
-==> docker.docker-jenkins: libnetcdf-and-deps : Download and unpack hdf5. ------------------------- 12.85s
-==> docker.docker-jenkins: libnetcdf-and-deps : Configure zlib. ----------------------------------- 12.23s
+==> docker.docker-jenkins: libnetcdf-and-deps : Build hdf5. -------------------------------------- 712.32s
+==> docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 386.58s
+==> docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ---------------------------------- 144.82s
+==> docker.docker-jenkins: zulu : Unpack Zulu Java Installations. -------------------------------- 139.65s
+==> docker.docker-jenkins: general-packages : Install os managed tools. -------------------------- 111.33s
+==> docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. -------------------------------- 110.63s
+==> docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. --------------------------- 101.66s
+==> docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 96.50s
+==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 90.32s
+==> docker.docker-jenkins: corretto : Unpack Corretto Java Installations. ------------------------- 87.59s
+==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 75.35s
+==> docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. ---------------------------------- 75.15s
+==> docker.docker-jenkins: Wait for netcdf-c async test task to complete. ------------------------- 65.85s
+==> docker.docker-jenkins: corretto : Fetch latest Corretto Java builds. -------------------------- 50.75s
+==> docker.docker-jenkins: libnetcdf-and-deps : Download and unpack netcdf-c. --------------------- 44.95s
+==> docker.docker-jenkins: libnetcdf-and-deps : Test zlib. ---------------------------------------- 29.79s
+==> docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ---- 22.42s
+==> docker.docker-jenkins: libnetcdf-and-deps : Build zlib. --------------------------------------- 22.06s
+==> docker.docker-jenkins: temurin : Read versions of installed Temurin. -------------------------- 22.01s
+==> docker.docker-jenkins: security : Update SSH configuration to be more secure. ----------------- 14.67s
 ~~~
