@@ -115,12 +115,12 @@ We use the following roles when provisioning our images:
  * location: `/usr/thredds-test-environment`
  * version: `4.10.1`
  * dependencies (same location):
-   * zlib version: `1.3.2`
-   * hdf5 version: `2.2.0`
+   * zlib version: `1.4`
+   * hdf5 version: `2.3.0`
 
 ### maven:
  * location: `/usr/thredds-test-environment/mvn`
- * version: `3.10.0`
+ * version: `3.10.2`
 
 ### Java:
  * Temurin (latest version available from adoptium.net)
@@ -161,26 +161,36 @@ We use the following roles when provisioning our images:
 ### Docker Image
 
 ~~~
-==> docker.docker-jenkins: Tuesday 27 October 2026  13:03:17 +0000 (0:00:04.737)       0:42:02.940 *******
+==> docker.docker-jenkins: Thursday 26 November 2026  01:34:13 +0000 (0:00:07.564)       0:17:21.348 *****
+==> docker.docker-jenkins: ok: [127.0.0.1]
+==> docker.docker-jenkins:
+==> docker.docker-jenkins: RUNNING HANDLER [security : restart ssh] ***************************************
+==> docker.docker-jenkins: Thursday 26 November 2026  01:34:15 +0000 (0:00:01.798)       0:17:23.146 *****
+==> docker.docker-jenkins: changed: [127.0.0.1]
+==> docker.docker-jenkins:
+==> docker.docker-jenkins: PLAY RECAP *********************************************************************
+==> docker.docker-jenkins: 127.0.0.1                  : ok=63   changed=52   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+==> docker.docker-jenkins:
+==> docker.docker-jenkins: Thursday 26 November 2026  01:34:18 +0000 (0:00:03.053)       0:17:26.200 *****
 ==> docker.docker-jenkins: ===============================================================================
-==> docker.docker-jenkins: libnetcdf-and-deps : Build hdf5. -------------------------------------- 718.08s
-==> docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 387.99s
-==> docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ---------------------------------- 145.04s
-==> docker.docker-jenkins: zulu : Unpack Zulu Java Installations. -------------------------------- 117.38s
-==> docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. -------------------------------- 104.60s
-==> docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 98.56s
-==> docker.docker-jenkins: Wait for netcdf-c async test task to complete. ------------------------- 97.41s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 93.30s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 89.16s
-==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 87.16s
-==> docker.docker-jenkins: corretto : Unpack Corretto Java Installations. ------------------------- 86.38s
-==> docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. ---------------------------- 70.39s
-==> docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. ---------------------------------- 61.90s
-==> docker.docker-jenkins: corretto : Fetch latest Corretto Java builds. -------------------------- 52.93s
-==> docker.docker-jenkins: libnetcdf-and-deps : Test zlib. ---------------------------------------- 29.64s
-==> docker.docker-jenkins: libnetcdf-and-deps : Download and unpack netcdf-c. --------------------- 26.05s
-==> docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ---- 22.30s
-==> docker.docker-jenkins: libnetcdf-and-deps : Build zlib. --------------------------------------- 20.10s
-==> docker.docker-jenkins: security : Update SSH configuration to be more secure. ----------------- 17.21s
-==> docker.docker-jenkins: temurin : Read versions of installed Temurin. -------------------------- 15.75s
+==> docker.docker-jenkins: libnetcdf-and-deps : Configure netCDF-c. ------------------------------ 184.99s
+==> docker.docker-jenkins: libnetcdf-and-deps : Build hdf5. -------------------------------------- 157.63s
+==> docker.docker-jenkins: libnetcdf-and-deps : Configure hdf5. ----------------------------------- 82.41s
+==> docker.docker-jenkins: zulu : Fetch latest Zulu Java builds. ---------------------------------- 71.73s
+==> docker.docker-jenkins: libnetcdf-and-deps : Test zlib. ---------------------------------------- 66.72s
+==> docker.docker-jenkins: zulu : Unpack Zulu Java Installations. --------------------------------- 66.54s
+==> docker.docker-jenkins: temurin : Fetch latest Temurin Java builds. ---------------------------- 60.71s
+==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 44.39s
+==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 39.68s
+==> docker.docker-jenkins: corretto : Fetch latest Corretto Java builds. -------------------------- 39.44s
+==> docker.docker-jenkins: libnetcdf-and-deps : Install netCDF-c. --------------------------------- 38.21s
+==> docker.docker-jenkins: corretto : Unpack Corretto Java Installations. ------------------------- 36.63s
+==> docker.docker-jenkins: temurin : Unpack Temurin Java Installations. --------------------------- 35.70s
+==> docker.docker-jenkins: general-packages : Install os managed tools. --------------------------- 14.49s
+==> docker.docker-jenkins: libnetcdf-and-deps : Download and unpack netcdf-c. --------------------- 12.37s
+==> docker.docker-jenkins: libnetcdf-and-deps : Download and unpack hdf5. -------------------------- 9.19s
+==> docker.docker-jenkins: cleanup : Remove packages that are not needed in final environment. ----- 7.56s
+==> docker.docker-jenkins: libnetcdf-and-deps : Build zlib. ---------------------------------------- 7.49s
+==> docker.docker-jenkins: libnetcdf-and-deps : Configure zlib. ------------------------------------ 6.67s
+==> docker.docker-jenkins: zulu : Read versions of installed Zulu. --------------------------------- 6.49s
 ~~~
